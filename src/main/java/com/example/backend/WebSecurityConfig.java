@@ -6,17 +6,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import com.example.backend.common.AuthorizationCheckFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfiguration {
 
+    
     protected void configure(HttpSecurity http) throws Exception {
         // 關閉 CSRF 保護
         http.csrf(csrf -> csrf.disable())
-                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new AuthorizationCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .and()
+                        .addFilterBefore(new AuthorizationCheckFilter(), UsernamePasswordAuthenticationFilter.class));
     }
-
 }
