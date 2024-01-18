@@ -3,6 +3,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.backend.common.SqlScriptRunner;
+
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
 
