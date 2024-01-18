@@ -25,7 +25,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
     
-    @PostMapping("/login")
+    @PostMapping("/public/login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> loginRequest) {
         String phoneNumber = loginRequest.get("phoneNumber");
         String password = loginRequest.get("password");

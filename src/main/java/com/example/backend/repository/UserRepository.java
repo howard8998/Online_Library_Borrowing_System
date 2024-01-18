@@ -36,7 +36,7 @@ public class UserRepository {
 
     public String getPasswordByPhoneNumber(String phoneNumber) {
         try {
-            String sql = "SELECT Password FROM Users WHERE PhoneNumber = ?";
+            String sql = "SELECT Password FROM Users WHERE PhoneNumber =CAST(? AS INT)";
             return jdbcTemplate.queryForObject(sql, String.class, phoneNumber);
         } catch (EmptyResultDataAccessException e) {
             return null; // 用戶不存在

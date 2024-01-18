@@ -10,23 +10,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.example.backend.common.AuthorizationCheckFilter;
 
 @Configuration
-public class SecurityConfig{
+public class SecurityConfig {
     @Bean
-    public  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 在這裡進行相關的安全配置
         http
-            .authorizeHttpRequests(requests ->requests
-                .requestMatchers("/public/**").permitAll()
-                .anyRequest().authenticated())
-            .formLogin(login ->login
-                .loginPage("/login")
-                .permitAll())
-            .logout(logout ->logout
-                .permitAll())
-            .csrf(csrf ->csrf.disable())
-            .sessionManagement(management ->management
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(new AuthorizationCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/public/**").permitAll()
+                        .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new AuthorizationCheckFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
