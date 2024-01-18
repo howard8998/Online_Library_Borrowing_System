@@ -19,18 +19,19 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/public/register")
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, String> registrationRequest) {
         String phoneNumber = registrationRequest.get("phoneNumber");
         String password = registrationRequest.get("password");
         String userName = registrationRequest.get("userName");
-
+        
         try {
             // 檢查用戶是否已存在
+
             if (userService.isUserExists(phoneNumber)) {
                 throw new CustomException("User already exists", HttpStatus.BAD_REQUEST);
             }
-
+            System.out.println("Received registration request: phoneNumber=" + phoneNumber + ", password=" + password + ", userName=" + userName);
             // 註冊新使用者
             userService.registerUser(phoneNumber, password, userName);
 

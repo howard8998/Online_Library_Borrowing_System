@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.backend.common.CustomException;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public class UserRepository {
 
@@ -21,7 +23,7 @@ public class UserRepository {
         int count = jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
         return count > 0;
     }
-
+    @Transactional
     public void registerUser(String phoneNumber, String hashedPassword, String userName, LocalDateTime registrationTime) {
         try {
             String sql = "INSERT INTO Users (PhoneNumber, Password, UserName, RegistrationTime) VALUES (?, ?, ?, ?)";

@@ -24,8 +24,13 @@ public class UserService {
         // 加密密碼
         String hashedPassword = passwordEncoder.encode(password);
         // 註冊新使用者
-        userRepository.registerUser(phoneNumber, hashedPassword, userName, LocalDateTime.now());
-        return true;
+        try {
+            userRepository.registerUser(phoneNumber, hashedPassword, userName, LocalDateTime.now());
+            return true;
+        } catch (Exception e) {
+            // 处理注册失败的情况
+            return false;
+        }
     }
 
     public boolean isUserExists(String phoneNumber) {

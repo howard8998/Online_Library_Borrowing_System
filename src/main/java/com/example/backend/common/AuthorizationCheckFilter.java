@@ -24,7 +24,7 @@ public class AuthorizationCheckFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull jakarta.servlet.http.HttpServletRequest req,@NonNull jakarta.servlet.http.HttpServletResponse res,@NonNull jakarta.servlet.FilterChain chain)
 throws jakarta.servlet.ServletException, IOException {
-        // 如果不是登入就攔截
+
         if (!req.getServletPath().equals("/login") && !req.getServletPath().equals("/register")) {
             String authorHeader = req.getHeader(AUTHORIZATION);
             String bearer = "Bearer ";
