@@ -11,15 +11,13 @@ import java.util.List;
 public class BorrowingRecordService {
 
     @Autowired
-    private BorrowingRecordRepository borrowingRecordRepository;
+    private  BorrowingRecordRepository borrowingRecordRepository;
 
-    public List<BorrowingRecord> getBorrowingRecordsByUserId(Long userId) {
+    public  List<BorrowingRecord> getBorrowingRecordsByUserId(int userId) {
         return borrowingRecordRepository.getBorrowingRecordsByUserId(userId);
     }
 
     public List<BorrowingRecord> getAllBorrowingRecords() {
         return borrowingRecordRepository.getAllBorrowingRecords();
     }
-
-    // 其他相關方法...
 }

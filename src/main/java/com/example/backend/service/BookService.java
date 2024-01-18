@@ -33,6 +33,22 @@ public class BookService {
             throw new CustomException("借書失敗，無法更新庫存狀態或新增借閱紀錄", HttpStatus.BAD_REQUEST);
         }
     }
+    @Transactional
+    public boolean returnBook(int targetId, int userId) {
+        try {
+            // 呼叫 repository 更新 Inventory 狀態
+            bookRepository.setBookStatus(targetId, "可借閱", userId);
+            // 更新借閱紀錄中的還書時間
+            bookRepository.updateReturnTime(targetId, userId);
+
+            return true;
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException("還書失敗，無法更新庫存狀態或更新還書時間", HttpStatus.BAD_REQUEST);
+        }
+    }
     public List<Book> getAllAvailableBooks() {
         return bookRepository.findAllAvailableBooks();
     }

@@ -3,10 +3,13 @@ package com.example.backend.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.backend.common.CustomException;
 import com.example.backend.model.Book;
 
 @Repository
@@ -33,7 +36,18 @@ public class BookRepository {
         String sql = "SELECT * FROM books WHERE status = 'AVAILABLE'";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
     }
-
+    public boolean updateReturnTime(int targetId, int userId) {
+        try {
+            // 更新還書時間
+            String updateReturnTimeSql = "UPDATE BorrowingRecord SET returntime = NOW() WHERE inventoryid = ? AND userid = ?";
+            int rowsAffected = jdbcTemplate.update(updateReturnTimeSql, targetId, userId);
+            // 檢查是否有行受到影響
+            return rowsAffected > 0;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            throw new CustomException("更新還書時間失敗", HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
 // 新增借閱紀錄

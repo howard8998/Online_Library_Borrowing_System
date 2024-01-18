@@ -14,7 +14,7 @@ public class BorrowingRecordRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<BorrowingRecord> getBorrowingRecordsByUserId(Long userId) {
+    public List<BorrowingRecord> getBorrowingRecordsByUserId(int userId) {
         String sql = "SELECT * FROM BorrowingRecord WHERE userid = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BorrowingRecord.class), userId);
     }
