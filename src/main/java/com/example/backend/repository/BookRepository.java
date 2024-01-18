@@ -33,7 +33,7 @@ public class BookRepository {
     }
 
     public List<Book> findAllAvailableBooks() {
-        String sql = "SELECT * FROM books WHERE status = 'AVAILABLE'";
+        String sql = "SELECT * FROM inventory WHERE status = '可借閱'";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
     }
     public boolean updateReturnTime(int targetId, int userId) {

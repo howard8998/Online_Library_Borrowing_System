@@ -5,26 +5,28 @@ import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import org.springframework.lang.NonNull;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 public class AuthorizationCheckFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(@NonNull jakarta.servlet.http.HttpServletRequest req,@NonNull jakarta.servlet.http.HttpServletResponse res,@NonNull jakarta.servlet.FilterChain chain)
-throws jakarta.servlet.ServletException, IOException {
-
+    protected void doFilterInternal(@NonNull jakarta.servlet.http.HttpServletRequest req,
+            @NonNull jakarta.servlet.http.HttpServletResponse res, @NonNull jakarta.servlet.FilterChain chain)
+            throws jakarta.servlet.ServletException, IOException {
+        Dotenv dotenv = Dotenv.configure().load();
         if (!req.getServletPath().startsWith("/public/")) {
             String authorHeader = req.getHeader(AUTHORIZATION);
             String bearer = "Bearer ";
@@ -34,8 +36,7 @@ throws jakarta.servlet.ServletException, IOException {
                 try {
                     String token = authorHeader.substring(bearer.length());
 
-                    // 使用 SecretKeySpec 包裝 MySecret
-                    Key key = new SecretKeySpec("MySecret".getBytes(), SignatureAlgorithm.HS256.getJcaName());
+                    Key key = Keys.hmacShaKeyFor(dotenv.get("JWT_SECRET").getBytes());
 
                     Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 

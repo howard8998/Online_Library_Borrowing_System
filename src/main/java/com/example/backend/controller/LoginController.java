@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.common.CustomException;
 import com.example.backend.service.UserService;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
@@ -68,9 +68,9 @@ public class LoginController {
 
     private String generateToken(String phoneNumber) {
         long expirationMillis = 3600000; // Token 過期時間（1小時）
-
+        Dotenv dotenv = Dotenv.configure().load();
         // 產生一個安全的秘密金鑰
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        Key key = Keys.hmacShaKeyFor(dotenv.get("JWT_SECRET").getBytes());
 
         return Jwts.builder()
                 .setSubject(phoneNumber)
