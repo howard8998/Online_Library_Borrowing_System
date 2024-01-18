@@ -36,7 +36,7 @@ public class LoginController {
 
             if (isAuthenticated) {
                 // 登入成功
-                String token = generateToken(phoneNumber); 
+                String token = generateToken(phoneNumber);
                 Map<String, String> response = new HashMap<>();
                 response.put("token", token);
                 return ResponseEntity.ok(response);
@@ -46,7 +46,6 @@ public class LoginController {
             }
         } catch (CustomException e) {
             // 處理自定義異常
-            
             return ResponseEntity.status(e.getStatusCode()).body(null);
         }
     }

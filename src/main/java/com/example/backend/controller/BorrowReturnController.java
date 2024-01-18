@@ -21,7 +21,7 @@ import com.example.backend.service.BookService;
 import com.example.backend.service.BorrowingRecordService;
 
 @RestController
-@RequestMapping("/api/borrow-return")
+@RequestMapping("/api")
 public class BorrowReturnController {
 
     @Autowired

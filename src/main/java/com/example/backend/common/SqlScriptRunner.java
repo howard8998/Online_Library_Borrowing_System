@@ -1,4 +1,5 @@
 package com.example.backend.common;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,17 +25,26 @@ public class SqlScriptRunner {
     }
 
     public void runScripts() {
-        executeScript(schemaScript);
-        executeScript(dataScript);
+        if (!doesTableExist("users")) {
+            executeScript(schemaScript);
+            executeScript(dataScript);
+        }
+        
     }
 
     private void executeScript(Resource script) {
         try {
-            String scriptContent = new String(FileCopyUtils.copyToByteArray(script.getInputStream()), StandardCharsets.UTF_8);
+            String scriptContent = new String(FileCopyUtils.copyToByteArray(script.getInputStream()),
+                    StandardCharsets.UTF_8);
             jdbcTemplate.execute(scriptContent);
         } catch (IOException e) {
             e.printStackTrace();
             // 處理異常情況
         }
+    }
+
+    private boolean doesTableExist(String tableName) {
+        String sql = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, tableName);
     }
 }
