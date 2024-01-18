@@ -19,14 +19,14 @@ public class UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     public boolean isUserExists(String phoneNumber) {
-        String sql = "SELECT COUNT(*) FROM Users WHERE PhoneNumber = ?";
+        String sql = "SELECT COUNT(*) FROM users WHERE phonenumber = CAST(? AS INT)";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
         return count > 0;
     }
     @Transactional
     public void registerUser(String phoneNumber, String hashedPassword, String userName, LocalDateTime registrationTime) {
         try {
-            String sql = "INSERT INTO Users (PhoneNumber, Password, UserName, RegistrationTime) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO Users (PhoneNumber, Password, UserName, RegistrationTime) VALUES (CAST(? AS INT), ?, ?, ?)";
             jdbcTemplate.update(sql, phoneNumber, hashedPassword, userName, registrationTime);
         } catch (DataAccessException e) {
             e.printStackTrace();

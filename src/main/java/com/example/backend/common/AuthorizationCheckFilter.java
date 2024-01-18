@@ -25,7 +25,7 @@ public class AuthorizationCheckFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull jakarta.servlet.http.HttpServletRequest req,@NonNull jakarta.servlet.http.HttpServletResponse res,@NonNull jakarta.servlet.FilterChain chain)
 throws jakarta.servlet.ServletException, IOException {
 
-        if (!req.getServletPath().equals("/login") && !req.getServletPath().equals("/register")) {
+        if (!req.getServletPath().equals("/login")&&!req.getServletPath().equals("/public/register") ) {
             String authorHeader = req.getHeader(AUTHORIZATION);
             String bearer = "Bearer ";
             // 以 jjwt 驗證 token，只要驗證成功就放行

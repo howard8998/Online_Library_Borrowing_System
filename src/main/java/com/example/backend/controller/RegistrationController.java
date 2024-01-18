@@ -31,7 +31,7 @@ public class RegistrationController {
             if (userService.isUserExists(phoneNumber)) {
                 throw new CustomException("User already exists", HttpStatus.BAD_REQUEST);
             }
-            System.out.println("Received registration request: phoneNumber=" + phoneNumber + ", password=" + password + ", userName=" + userName);
+
             // 註冊新使用者
             userService.registerUser(phoneNumber, password, userName);
 
