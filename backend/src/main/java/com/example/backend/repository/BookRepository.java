@@ -1,8 +1,13 @@
 package com.example.backend.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.example.backend.model.Book;
 
 @Repository
 public class BookRepository {
@@ -23,6 +28,13 @@ public class BookRepository {
         String insertBorrowingRecordSql = "INSERT INTO BorrowingRecord (inventoryid, userid, borrowtime) VALUES (?, ?, NOW())";
         jdbcTemplate.update(insertBorrowingRecordSql, targetId, userId);
     }
+
+    public List<Book> findAllAvailableBooks() {
+        String sql = "SELECT * FROM books WHERE status = 'AVAILABLE'";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+    }
+
+
 }
 // 新增借閱紀錄
 /*

@@ -4,7 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.common.CustomException;
+import com.example.backend.model.Book;
 import com.example.backend.repository.BookRepository;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,4 +33,8 @@ public class BookService {
             throw new CustomException("借書失敗，無法更新庫存狀態或新增借閱紀錄", HttpStatus.BAD_REQUEST);
         }
     }
+    public List<Book> getAllAvailableBooks() {
+        return bookRepository.findAllAvailableBooks();
+    }
+
 }
