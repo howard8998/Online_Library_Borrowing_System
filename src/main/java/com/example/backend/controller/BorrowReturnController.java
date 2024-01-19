@@ -29,12 +29,13 @@ public class BorrowReturnController {
     @Autowired
     private BorrowingRecordService borrowingRecordService;
 
-     @GetMapping("/available-books")
+    @GetMapping("/available-books")
     public ResponseEntity<List<Book>> getAvailableBooks() {
         try {
             List<Book> availableBooks = bookService.getAllAvailableBooks();
             return ResponseEntity.ok(availableBooks);
         } catch (CustomException e) {
+            e.printStackTrace();
             return ResponseEntity.status((HttpStatus) Objects.requireNonNull(e.getStatusCode())).body(Collections.emptyList());
         }
     }

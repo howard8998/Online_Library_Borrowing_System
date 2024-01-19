@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,11 +40,14 @@ public class AuthorizationCheckFilter extends OncePerRequestFilter {
                     Key key = Keys.hmacShaKeyFor(dotenv.get("JWT_SECRET").getBytes());
 
                     Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+                    JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(claims.getSubject(), null);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-                    System.out.println("JWT payload:" + claims.toString());
-
+                    System.out.println("legal!\n" + "JWT payload:" + claims.toString());
                     chain.doFilter(req, res);
+
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.err.println("Error : " + e);
                     res.setStatus(FORBIDDEN.value());
 

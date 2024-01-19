@@ -33,9 +33,24 @@ public class BookRepository {
     }
 
     public List<Book> findAllAvailableBooks() {
-        String sql = "SELECT * FROM inventory WHERE status = '可借閱'";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+        try {
+            String sql = "SELECT Book.Name AS Name, Book.Author AS Author, Book.Introduction AS Introduction FROM Book JOIN Inventory ON Book.ISBN = Inventory.ISBN WHERE Inventory.Status = '可借閱'";
+            List<Book> availableBooks = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+            // 在這裡添加日誌或印出語句
+            System.out.println("Available Books:");
+            for (Book book : availableBooks) {
+                System.out.println("Name: " + book.getName() + ", Author: "
+                        + book.getAuthor() + ", Introduction: " + book.getIntroduction());
+            }
+
+            return availableBooks;
+        } catch (Exception e) {
+            // 捕捉並處理任何異常
+            e.printStackTrace(); 
+            throw new RuntimeException("Error retrieving available books");
+        }
     }
+
     public boolean updateReturnTime(int targetId, int userId) {
         try {
             // 更新還書時間
