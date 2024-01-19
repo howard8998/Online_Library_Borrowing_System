@@ -7,6 +7,9 @@ public class BorrowingRecord {
     private Long inventoryId;
     private LocalDateTime borrowingTime;
     private LocalDateTime returnTime;
+    private String name;
+    private String author;
+    private String introduction;
 
     public BorrowingRecord() {
     }
@@ -16,6 +19,13 @@ public class BorrowingRecord {
         this.inventoryId = inventoryId;
         this.borrowingTime = borrowingTime;
         this.returnTime = returnTime;
+    }
+
+    public BorrowingRecord( LocalDateTime borrowingTime, String name, String author, String introduction) {
+        this.borrowingTime = borrowingTime;
+        this.name = name;
+        this.author = author;
+        this.introduction = introduction;
     }
 
     // Getter 和 Setter 方法
@@ -49,5 +59,29 @@ public class BorrowingRecord {
 
     public void setReturnTime(LocalDateTime returnTime) {
         this.returnTime = returnTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String title) {
+        this.name = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

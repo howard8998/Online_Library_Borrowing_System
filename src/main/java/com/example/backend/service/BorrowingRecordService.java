@@ -17,7 +17,7 @@ public class BorrowingRecordService {
         return borrowingRecordRepository.getBorrowingRecordsByUserId(userId);
     }
 
-    public List<BorrowingRecord> getAllBorrowingRecords() {
-        return borrowingRecordRepository.getAllBorrowingRecords();
+    public List<BorrowingRecord> getUnreturnBorrowingRecords() {
+        return borrowingRecordRepository.getUnreturnBorrowingRecords();
     }
 }

@@ -50,10 +50,10 @@ public class BorrowReturnController {
         }
     }
 
-    @GetMapping("/all-borrow-history")
+    @GetMapping("/unreturn-borrow-history")
     public ResponseEntity<List<BorrowingRecord>> getAllBorrowHistory() {
         try {
-            List<BorrowingRecord> allBorrowHistory = borrowingRecordService.getAllBorrowingRecords();
+            List<BorrowingRecord> allBorrowHistory = borrowingRecordService.getUnreturnBorrowingRecords();
             return ResponseEntity.ok(allBorrowHistory);
         } catch (CustomException e) {
             return ResponseEntity.status((HttpStatus) Objects.requireNonNull(e.getStatusCode())).body(Collections.emptyList());

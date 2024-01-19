@@ -19,8 +19,12 @@ public class BorrowingRecordRepository {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BorrowingRecord.class), userId);
     }
 
-    public List<BorrowingRecord> getAllBorrowingRecords() {
-        String sql = "SELECT * FROM BorrowingRecord";
+    public List<BorrowingRecord> getUnreturnBorrowingRecords() {
+        String sql = "SELECT BorrowingRecord.BorrowingTime,Book.Name, Book.Author, Book.Introduction\r\n" + //
+                "FROM BorrowingRecord\r\n" + //
+                "JOIN Inventory ON BorrowingRecord.InventoryID = Inventory.InventoryID\r\n" + //
+                "JOIN Book ON Inventory.ISBN = Book.ISBN\r\n" + //
+                "WHERE BorrowingRecord.ReturnTime IS NULL;";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BorrowingRecord.class));
     }
 
