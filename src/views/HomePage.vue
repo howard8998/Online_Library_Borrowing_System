@@ -51,7 +51,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import availableBooks from "@/API/availableBooks";
-
+import authService from "@/API/authService";
 export default {
   computed: {
     ...mapState(["books"]),
@@ -91,9 +91,16 @@ export default {
       // 根據你的邏輯判斷是否可以還書
       return true;
     },
-    logout() {
-      // 實現登出邏輯，可能需要清除 token 等
-      console.log("Logging out...");
+    async logout() {
+      const logoutResult = await authService.logout();
+      if (logoutResult.success) {
+        // 如果登出成功，可以進行相應的處理，例如導航到登入頁面
+        console.log("Logout successful");
+        this.$router.push("/login");
+      } else {
+        // 登出失敗，可以顯示錯誤信息
+        console.error("Logout failed:", logoutResult.message);
+      }
     },
   },
   created() {

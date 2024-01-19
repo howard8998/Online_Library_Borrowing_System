@@ -24,6 +24,15 @@ const authService = {
       console.error("Error during login:", error);
       return { success: false, message: "Error during login" };
     }
+  },async logout() {
+    try {
+      // 清除 Vuex 中的 token
+      localStorage.clear;
+      return { success: true };
+    } catch (error) {
+      console.error("Error during logout:", error);
+      return { success: false, message: "Error during logout" };
+    }
   },
   setupAxiosInterceptors() {
     // 設定請求攔截器
