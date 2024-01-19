@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from '@/store'
+import store from "@/store";
 import router from "@/router";
 const authService = {
   async login(phoneNumber, password) {
@@ -24,14 +24,39 @@ const authService = {
       console.error("Error during login:", error);
       return { success: false, message: "Error during login" };
     }
-  },async logout() {
+  },
+  async logout() {
     try {
       // 清除 Vuex 中的 token
-      localStorage.clear;
+      localStorage.removeItem("vuex");
+      store.commit("clearStoore");
       return { success: true };
     } catch (error) {
       console.error("Error during logout:", error);
       return { success: false, message: "Error during logout" };
+    }
+  },
+  async register(phoneNumber, password, userName) {
+    try {
+      const response = await axios.post(
+        `${process.env.VUE_APP_API_ENDPOINT}/public/register`,
+        {
+          phoneNumber,
+          password,
+          userName,
+        }
+      );
+
+      if (response.data.status === "success") {
+        // 註冊成功
+        return { success: true };
+      } else {
+        // 註冊失敗
+        return { success: false, message: response.data.message };
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      return { success: false, message: "Error during registration" };
     }
   },
   setupAxiosInterceptors() {
@@ -58,8 +83,8 @@ const authService = {
         // 檢查是否為 token 過期錯誤 (示例，實際應根據後端返回的錯誤進行判斷)
         if (error.response && error.response.status === 401) {
           // token 過期，執行登出操作
-          store.commit('setToken', null);
-          router.push('/login'); // 導向登入頁面
+          store.commit("setToken", null);
+          router.push("/login"); // 導向登入頁面
         }
         return Promise.reject(error);
       }

@@ -15,5 +15,9 @@ export default createStore({
     setBooks(state, books) {
       state.books = books;
     },
+    clearStore(state) {
+      state.userToken = null;
+      state.books = [];
+    },
   },
 });
