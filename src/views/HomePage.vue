@@ -36,8 +36,12 @@
     >
       <h2>已借書籍列表</h2>
       <ul>
-        <li v-for="book in borrowedBooks" :key="book.inventoryID">
-          {{ book.name }} by {{ book.author }}
+        <li
+          v-for="borrowHistory in borrowHistory"
+          :key="borrowHistory.inventoryID"
+        >
+          {{ borrowHistory.name }} by {{ borrowHistory.author }}
+          <button @click="returnBook(borrowHistory.inventoryId)">歸還</button>
         </li>
       </ul>
       <button @click="closeBorrowedBooksDialog">關閉</button>
@@ -64,20 +68,26 @@ import { mapState, mapMutations } from "vuex";
 import availableBooks from "@/API/availableBooks";
 import authService from "@/API/authService";
 import borrowReturn from "@/API/borrowReturn";
+import getUserBorrowHistory from "@/API/getUserBorrowHistory";
+
 export default {
   data() {
     return {
       selectedBook: null,
+      borrowedBooksDialog: false, // 新增 borrowedBooksDialog 状态
     };
   },
   computed: {
-    ...mapState(["books"]),
+    ...mapState(["books", "borrowHistory"]),
     availableBooks() {
       return this.books;
     },
+    getUserBorrowHistory() {
+      return this.borrowHistory;
+    },
   },
   methods: {
-    ...mapMutations(["setBooks"]),
+    ...mapMutations(["setBooks", "setBorrowHistory"]),
     async fetchAvailableBooks() {
       try {
         const books = await availableBooks.getAvailableBooks();
@@ -86,11 +96,20 @@ export default {
         console.error("獲取可借書籍列表失敗", error);
       }
     },
+    async fetchBorrowHistory() {
+      try {
+        const borrowHistory = await getUserBorrowHistory.getUserBorrowHistory(
+          this.$store.state.userID
+        );
+        this.setBorrowHistory(borrowHistory);
+      } catch (error) {
+        console.error("獲取借閱歷史記錄失敗", error);
+      }
+    },
     showBookDetails(book) {
       this.selectedBook = book;
     },
     closeBookDetailsDialog() {
-      // 關閉對話框
       this.selectedBook = null;
     },
     async borrowBook(inventoryID) {
@@ -100,22 +119,30 @@ export default {
           this.$store.state.userID
         );
         this.fetchAvailableBooks();
+        this.fetchBorrowHistory(),
         console.log(response);
       } catch (error) {
         console.error("借書失敗", error);
       }
     },
-    showBorrowedBooksDialog() {},
     async returnBook(inventoryID) {
       try {
         const response = await borrowReturn.returnBook(
           inventoryID,
           this.$store.state.userID
         );
+        this.fetchBorrowHistory();
+        this.fetchAvailableBooks();
         console.log(response);
       } catch (error) {
         console.error("還書失敗", error);
       }
+    },
+    showBorrowedBooksDialog() {
+      this.borrowedBooksDialog = true;
+    },
+    closeBorrowedBooksDialog() {
+      this.borrowedBooksDialog = false;
     },
 
     async logout() {
@@ -130,6 +157,7 @@ export default {
   },
   created() {
     this.fetchAvailableBooks();
+    this.fetchBorrowHistory();
   },
 };
 </script>
