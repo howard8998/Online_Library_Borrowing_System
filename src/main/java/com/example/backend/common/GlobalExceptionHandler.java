@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
-        // 在此处理所有未被特定ExceptionHandler捕捉到的異常，将错误消息返回到前端
+        // 在此處理所有未被特定ExceptionHandler捕捉到的異常，将错误消息返回到前端
         String errorMessage = "發生了一個錯誤：" + e.getMessage();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }

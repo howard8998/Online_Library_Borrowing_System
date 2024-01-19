@@ -32,8 +32,4 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     public Object getPrincipal() {
         return this.username;
     }
-
-    // 如果需要存储更多的用户信息，可以添加相应的 getter 和 setter 方法
-
-    // 省略一些方法，比如 equals, hashCode 等
 }
