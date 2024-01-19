@@ -20,8 +20,8 @@
                   <input v-model="password" type="password" class="form-control" required />
                 </div>
               </div>
-              <div class="me-3 text-end mb-3"> 
-                <button type="submit" class="btn btn-primary me-3">登入</button>
+              <div class="me-3 text-end" > 
+                <button type="submit" class="btn btn-primary me-3" style="margin-top: 5px;margin-right: 10px;">登入</button>
                 <button type="button" @click="register" class="btn btn-primary">註冊</button>
               </div>
             </form>
