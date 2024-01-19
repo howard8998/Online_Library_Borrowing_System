@@ -16,6 +16,7 @@ const authService = {
         const token = response.data.token;
         const userId = response.data.userId;
         store.commit("setToken", token);
+        store.commit("setUserID", userId);
         return { success: true, token, userId };
       } else {
         return { success: false, message: "Authentication failed" };
