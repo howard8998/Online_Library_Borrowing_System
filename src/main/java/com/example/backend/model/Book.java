@@ -1,18 +1,28 @@
 package com.example.backend.model;
 
 public class Book {
-
     private String name;
     private String author;
     private String introduction;
+    private int inventoryID;  // 新增的屬性
 
     public Book() {
     }
-    
-    public Book(String name, String author, String introduction) {
+
+    public Book( String name, String author, String introduction, int inventoryID) {
         this.name = name;
         this.author = author;
         this.introduction = introduction;
+        this.inventoryID = inventoryID;
+    }
+
+    // Getter and Setter for new property
+    public int getInventoryID() {
+        return inventoryID;
+    }
+
+    public void setInventoryID(int inventoryID) {
+        this.inventoryID = inventoryID;
     }
 
     // Getter 和 Setter 方法

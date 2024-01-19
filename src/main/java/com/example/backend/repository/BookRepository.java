@@ -34,7 +34,7 @@ public class BookRepository {
 
     public List<Book> findAllAvailableBooks() {
         try {
-            String sql = "SELECT Book.Name AS Name, Book.Author AS Author, Book.Introduction AS Introduction FROM Book JOIN Inventory ON Book.ISBN = Inventory.ISBN WHERE Inventory.Status = '可借閱'";
+            String sql = "SELECT Book.Name AS Name, Book.Author AS Author, Book.Introduction AS Introduction ,Inventory.InventoryID as InventoryID FROM Book JOIN Inventory ON Book.ISBN = Inventory.ISBN WHERE Inventory.Status = '可借閱'";
             List<Book> availableBooks = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
             // 在這裡添加日誌或印出語句
             System.out.println("Available Books:");
