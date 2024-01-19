@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.example.backend.common.CustomException;
 import com.example.backend.repository.UserRepository;
 
-
 @Service
 public class UserService {
 
@@ -35,6 +34,11 @@ public class UserService {
 
     public boolean isUserExists(String phoneNumber) {
         return userRepository.isUserExists(phoneNumber);
+    }
+
+    public String getUserId(String phoneNumber) {
+
+        return userRepository.getUserIDByPhoneNumber(phoneNumber);
     }
 
     public boolean authenticateUser(String phoneNumber, String password) {

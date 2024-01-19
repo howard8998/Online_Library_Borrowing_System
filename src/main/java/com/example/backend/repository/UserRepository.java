@@ -23,14 +23,27 @@ public class UserRepository {
         int count = jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
         return count > 0;
     }
+
     @Transactional
-    public void registerUser(String phoneNumber, String hashedPassword, String userName, LocalDateTime registrationTime) {
+    public void registerUser(String phoneNumber, String hashedPassword, String userName,
+            LocalDateTime registrationTime) {
         try {
             String sql = "INSERT INTO Users (PhoneNumber, Password, UserName, RegistrationTime) VALUES (CAST(? AS INT), ?, ?, ?)";
             jdbcTemplate.update(sql, phoneNumber, hashedPassword, userName, registrationTime);
         } catch (DataAccessException e) {
             e.printStackTrace();
             throw new CustomException("註冊失敗", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public String getUserIDByPhoneNumber(String phoneNumber) {
+        try {
+            String query = "SELECT id FROM Users WHERE PhoneNumber = CAST(? AS INT)";
+            return jdbcTemplate.queryForObject(query, String.class, phoneNumber);
+        } catch (Exception e) {
+            // 處理異常，例如數據庫查詢失敗
+            e.printStackTrace();
+            throw new CustomException("Failed to get user ID by phone number", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -43,4 +56,3 @@ public class UserRepository {
         }
     }
 }
-

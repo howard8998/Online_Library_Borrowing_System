@@ -60,7 +60,7 @@ public class BorrowReturnController {
         }
     }
 
-    @PutMapping("/{bookId}/borrow")
+    @PutMapping("/borrow")
     public ResponseEntity<String> borrowBook(@RequestParam int bookId, @RequestParam int userId) {
         boolean success = bookService.borrowBook(bookId, userId);
         if (success) {
@@ -70,7 +70,7 @@ public class BorrowReturnController {
         }
     }
 
-    @DeleteMapping("/{bookId}/return")
+    @DeleteMapping("/return")
     public ResponseEntity<String> returnBook(@RequestParam int bookId, @RequestParam int userId) {
         boolean success = bookService.returnBook(bookId, userId);
         if (success) {

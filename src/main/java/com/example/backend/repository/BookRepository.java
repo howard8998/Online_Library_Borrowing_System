@@ -28,7 +28,7 @@ public class BookRepository {
 
     public void insertBorrowingRecord(int targetId, int userId) {
         // 新增借閱紀錄
-        String insertBorrowingRecordSql = "INSERT INTO BorrowingRecord (inventoryid, userid, borrowtime) VALUES (?, ?, NOW())";
+        String insertBorrowingRecordSql = "INSERT INTO BorrowingRecord (inventoryid, userid, borrowingtime) VALUES (?, ?, NOW())";
         jdbcTemplate.update(insertBorrowingRecordSql, targetId, userId);
     }
 

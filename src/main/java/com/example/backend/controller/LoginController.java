@@ -37,9 +37,11 @@ public class LoginController {
             if (isAuthenticated) {
                 // 登入成功
                 String token = generateToken(phoneNumber);
+                String userId = userService.getUserId(phoneNumber);
                 Map<String, String> response = new HashMap<>();
                 response.put("status", "success");
                 response.put("token", token);
+                response.put("userId", userId);
                 return ResponseEntity.ok(response);
             } else {
                 // 登入失敗
