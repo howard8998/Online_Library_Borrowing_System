@@ -20,7 +20,7 @@ import com.example.backend.model.Book;
 import com.example.backend.model.BorrowingRecord;
 import com.example.backend.service.BookService;
 import com.example.backend.service.BorrowingRecordService;
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class BorrowReturnController {
