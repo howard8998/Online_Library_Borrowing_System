@@ -27,7 +27,7 @@
 #### 1. git clone
 
 Clone這個專案到本地環境：
-git clone https://github.com/howard8998/Online_Library_Borrowing_System.git
+git clone <https://github.com/howard8998/Online_Library_Borrowing_System.git>
 
 #### 2. 進入前端目錄
 
@@ -41,7 +41,7 @@ npm install
 
 npm run serve
 
-#### 現在，您可以通過訪問 http://localhost:8080 來訪問前端應用程式。
+#### 現在，您可以通過訪問 <http://localhost:8080> 來訪問前端應用程式
 
 ### 後端(Spring boot)
 
@@ -79,11 +79,118 @@ cd backend
 
 ### Spring Boot Starter Test
 
+## 檔案架構
+
+```bash
+
+
++---backend 後端
+|   |   .env
+|   |   .gitignore
+|   |   mvnw
+|   |   mvnw.cmd
+|   |   pom.xml
+|   |   README.md
+|   |   
+|   +---.mvn 包含 Maven Wrapper 相關的檔案
+|   |   \---wrapper
+|   |           maven-wrapper.jar
+|   |           maven-wrapper.properties
+|   |           
+|   +---src
+|   |   +---main
+|   |   |   +---java
+|   |   |   |   \---com
+|   |   |   |       \---example
+|   |   |   |           \---backend
+|   |   |   |               |   BackendApplication.java  程式進入點
+|   |   |   |               |   SecurityConfig.java request是否攔截設定
+|   |   |   |               |   
+|   |   |   |               +---common  通用檔案
+|   |   |   |               |       AuthorizationCheckFilter.java 檢查攜帶token是否正確
+|   |   |   |               |       CustomException.java 處理錯誤訊息
+|   |   |   |               |       GlobalExceptionHandler.java 接收錯誤訊息
+|   |   |   |               |       JwtAuthenticationToken.java 確認token是否正確
+|   |   |   |               |       SqlScriptRunner.java  執行SQL
+|   |   |   |               |       
+|   |   |   |               +---controller 控制層
+|   |   |   |               |       BorrowReturnController.java 接收借還書動作request 
+|   |   |   |               |       LoginController.java 接收登入動作request
+|   |   |   |               |       RegistrationController.java 註冊request
+|   |   |   |               |       
+|   |   |   |               +---model 物件模型
+|   |   |   |               |       Book.java 書籍
+|   |   |   |               |       BorrowingRecord.java 借閱紀錄
+|   |   |   |               |       
+|   |   |   |               +---repository 資料庫操作
+|   |   |   |               |       BookRepository.java 執行與書籍相關操作
+|   |   |   |               |       BorrowingRecordRepository.java 執行與借閱紀錄相關操作
+|   |   |   |               |       UserRepository.java 執行與用戶相關操作
+|   |   |   |               |       
+|   |   |   |               \---service 服務層
+|   |   |   |                       BookService.java 提供書籍相關服務
+|   |   |   |                       BorrowingRecordService.java 提供借閱紀錄相關服務
+|   |   |   |                       UserService.java 提供用戶相關服務
+|   |   |   |                       
+|   |   |   \---resources 靜態資源
+|   |   |       |   application.properties 配置文件
+|   |   |       |   
+|   |   |       \---DB 資料庫操作
+|   |   |               data.sql 創建測資
+|   |   |               schema.sql 資料庫結構定義檔
+|   |   |               
+|   |   \---test 測試程式
+|   |       \---java
+|   |           \---com
+|   |               \---example
+|   |                   \---backend
+|   |                           BackendApplicationTests.java
+|   |                           
+|   
+\---frontend 前端
+    |   .env
+    |   .gitignore
+    |   babel.config.js
+    |   jsconfig.json
+    |   package-lock.json
+    |   package.json
+    |   README.md
+    |   vue.config.js
+    |   
+    +---public 靜態資料
+    |       favicon.ico
+    |       index.html
+    |       
+    \---src
+        |   App.vue 主要組件
+        |   main.js 程式進入點
+        |   
+        +---API 後端API接口
+        |       authService.js 登入認證服務
+        |       availableBooks.js 取得可借閱書籍
+        |       borrowReturn.js 借還書功能
+        |       getUserBorrowHistory.js 取得用戶借閱資料
+        |       
+        +---assets 靜態資源
+        |       logo.png
+        |       
+        +---router 路徑設置
+        |       index.js
+        |       
+        +---store vuex
+        |       index.js
+        |       
+        \---views 頁面
+                HomePage.vue 主要頁面(登入後)
+                LoginPage.vue 登入頁面
+                
+```
+
 ## 貢獻
 
-歡迎提出問題、改進或新增功能！
+歡迎提出問題、改進或新增功能
 
 ## 授權
 
-這個專案採用 MIT 授權。
+這個專案採用 MIT 授權
 

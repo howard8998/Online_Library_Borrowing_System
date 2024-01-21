@@ -23,4 +23,9 @@ npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### .env
+
+VUE_APP_API_ENDPOINT請改為您的API端點
