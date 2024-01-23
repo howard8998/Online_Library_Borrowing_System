@@ -27,7 +27,7 @@ public class UserService {
             userRepository.registerUser(phoneNumber, hashedPassword, userName, LocalDateTime.now());
             return true;
         } catch (Exception e) {
-            // 处理注册失败的情况
+            // 處理註冊失敗
             return false;
         }
     }

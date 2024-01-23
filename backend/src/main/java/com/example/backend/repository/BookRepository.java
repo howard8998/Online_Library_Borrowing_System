@@ -36,7 +36,6 @@ public class BookRepository {
         try {
             String sql = "SELECT Book.Name AS Name, Book.Author AS Author, Book.Introduction AS Introduction ,Inventory.InventoryID as InventoryID FROM Book JOIN Inventory ON Book.ISBN = Inventory.ISBN WHERE Inventory.Status = '可借閱'";
             List<Book> availableBooks = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
-            // 在這裡添加日誌或印出語句
             System.out.println("Available Books:");
             for (Book book : availableBooks) {
                 System.out.println("Name: " + book.getName() + ", Author: "
@@ -65,10 +64,3 @@ public class BookRepository {
     }
 
 }
-// 新增借閱紀錄
-/*
- * String insertBorrowingRecordSql =
- * "INSERT INTO BorrowingRecord (inventoryid, userid, borrowtime) VALUES (?, ?, NOW())"
- * ;
- * jdbcTemplate.update(insertBorrowingRecordSql, targetId, userId);
- */
