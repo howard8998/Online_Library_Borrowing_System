@@ -22,6 +22,18 @@
 
 為了方便您快速啟動並運行這個系統，請按照以下步驟進行：
 
+### 後端(Spring boot)
+
+#### 1.進入後端目錄
+
+cd backend
+
+#### 2. 開啟專案，例如使用IDEA或Eclipse
+
+#### 3.啟動Spring Boot應用程式
+
+#### 現在，您的後端應用程式應該已經在 http://localhost:8080 上運行
+
 ### 前端(Vue.js)
 
 #### 1. git clone
@@ -41,19 +53,7 @@ npm install
 
 npm run serve
 
-#### 現在，您可以通過訪問 <http://localhost:8080> 來訪問前端應用程式
-
-### 後端(Spring boot)
-
-#### 1.進入後端目錄
-
-cd backend
-
-#### 2. 開啟專案，例如使用IDEA或Eclipse
-
-#### 3.啟動Spring Boot應用程式
-
-#### 現在，您的後端應用程式應該已經在 http://localhost:8081 上運行
+#### 現在，您可以通過訪問 <http://localhost:8081> 來訪問前端應用程式
 
 ## 技術堆疊
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.common.CustomException;
 import com.example.backend.service.UserService;
-@CrossOrigin(origins = "http://localhost:808")
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 public class RegistrationController {
 
